@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Log Files — OBD2 Emulator{% endblock %}
+
+{% block head %}
+  <!-- DataTables CDN for the log detail view -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Log Files</h1>
+  <p class="page-subtitle">Saved session logs — click a file to inspect its entries</p>
+</div>
+
+<div class="log-files-layout">
+  <!-- File list -->
+  <section class="card file-list-panel">
+    <div class="panel-header">
+      <h2 class="card-title">Saved Sessions</h2>
+      <button id="btn-refresh-files" class="btn btn-secondary btn-sm">&#8635; Refresh</button>
+    </div>
+    <div id="file-list-loading" class="loading-msg">Loading...</div>
+    <ul id="file-list" class="file-list"></ul>
+    <p id="no-files-msg" class="empty-msg" style="display:none">No saved log files yet.</p>
+  </section>
+
+  <!-- File detail -->
+  <section class="card file-detail-panel">
+    <div class="panel-header">
+      <h2 class="card-title" id="detail-title">Select a file</h2>
+      <div class="toolbar-actions" id="detail-toolbar" style="display:none">
+        <button id="btn-export-json" class="btn btn-secondary btn-sm">&#11015; JSON</button>
+        <button id="btn-export-csv" class="btn btn-secondary btn-sm">&#11015; CSV</button>
+        <button id="btn-delete-file" class="btn btn-danger btn-sm">&#128465; Delete</button>
+      </div>
+    </div>
+    <div id="detail-empty" class="empty-msg">No file selected.</div>
+    <div id="detail-content" style="display:none">
+      <div class="detail-meta" id="detail-meta"></div>
+      <table id="detail-table" class="display compact" style="width:100%">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Direction</th>
+            <th>CAN ID</th>
+            <th>Mode</th>
+            <th>PID</th>
+            <th>Data</th>
+            <th>Raw</th>
+          </tr>
+        </thead>
+        <tbody id="detail-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+  <script src="{{ url_for('static', filename='js/log_viewer.js') }}"></script>
+{% endblock %}

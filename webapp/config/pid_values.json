@@ -1,0 +1,21 @@
+{
+  "pids": {
+    "0x04": { "enabled": true, "human_value": 50.2 },
+    "0x05": { "enabled": true, "human_value": 90.0 },
+    "0x06": { "enabled": true, "human_value": 0.0 },
+    "0x07": { "enabled": true, "human_value": 0.0 },
+    "0x0b": { "enabled": true, "human_value": 101.0 },
+    "0x0c": { "enabled": true, "human_value": 2500.0 },
+    "0x0d": { "enabled": true, "human_value": 35.0 },
+    "0x0e": { "enabled": true, "human_value": 10.0 },
+    "0x0f": { "enabled": true, "human_value": 35.0 },
+    "0x10": { "enabled": true, "human_value": 3.2 },
+    "0x11": { "enabled": true, "human_value": 9.8 },
+    "0x2f": { "enabled": true, "human_value": 65.1 },
+    "0x33": { "enabled": true, "human_value": 101.0 },
+    "0x42": { "enabled": true, "human_value": 14.2 },
+    "0x46": { "enabled": true, "human_value": 25.0 },
+    "0x5c": { "enabled": true, "human_value": 95.0 }
+  },
+  "vin": "4T1BF3EK8AU123456"
+}

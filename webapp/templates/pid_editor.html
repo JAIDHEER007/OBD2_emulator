@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}PID Editor — OBD2 Emulator{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>PID Editor</h1>
+  <p class="page-subtitle">Set the human-readable values that the emulator will broadcast</p>
+</div>
+
+<section class="card">
+  <div class="pid-toolbar">
+    <div class="vin-row">
+      <label for="vin-input" class="vin-label">VIN</label>
+      <input type="text" id="vin-input" class="input vin-input" maxlength="17" placeholder="17-char VIN">
+    </div>
+    <div class="toolbar-actions">
+      <span id="save-status" class="status-text"></span>
+      <button id="btn-reset" class="btn btn-secondary">Reset to Defaults</button>
+      <button id="btn-save" class="btn btn-primary">Save &amp; Push to Arduino</button>
+    </div>
+  </div>
+
+  <div id="pid-loading" class="loading-msg">Loading PIDs...</div>
+
+  <table class="pid-table" id="pid-table" style="display:none">
+    <thead>
+      <tr>
+        <th>Enable</th>
+        <th>PID</th>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Unit</th>
+        <th>Min</th>
+        <th>Max</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="pid-tbody"></tbody>
+  </table>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pid_editor.js') }}"></script>
+{% endblock %}

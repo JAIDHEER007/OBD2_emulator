@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Verify — OBD2 Emulator{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Verify Mode</h1>
+  <p class="page-subtitle">Test the emulator using a VLinker FS and compare against your configured PID values</p>
+</div>
+
+<!-- Setup Card -->
+<section class="card">
+  <h2 class="card-title">VLinker FS Setup</h2>
+  <p class="hint">Plug the VLinker FS into a USB port. It connects to the CAN bus — separate from the Arduino USB.</p>
+
+  <div class="port-row">
+    <select id="vlinker-port-select" class="select">
+      <option value="">— select VLinker FS port —</option>
+    </select>
+    <button id="btn-refresh-ports" class="btn btn-secondary btn-sm">&#8635; Refresh</button>
+  </div>
+  <div id="vlinker-port-info" class="port-info-box"></div>
+
+  <div class="cycles-row">
+    <label for="cycles-input" class="cycles-label">Poll Cycles</label>
+    <input type="number" id="cycles-input" class="input cycles-input" value="20" min="1" max="200">
+    <span class="cycles-hint">× PIDs per cycle</span>
+  </div>
+
+  <div class="verify-actions">
+    <button id="btn-run-verify" class="btn btn-primary">&#9654; Run Verify</button>
+    <button id="btn-stop-verify" class="btn btn-danger" style="display:none">&#9632; Stop</button>
+    <span id="verify-status-text" class="status-text"></span>
+  </div>
+</section>
+
+<!-- Progress Card -->
+<section class="card" id="verify-progress-card" style="display:none">
+  <h2 class="card-title">Progress</h2>
+  <div id="verify-connect-info" class="info-banner"></div>
+  <div class="progress-bar-wrapper">
+    <div class="progress-bar" id="verify-progress-bar" style="width:0%"></div>
+  </div>
+  <p id="verify-progress-label" class="progress-label">Cycle 0 / 0</p>
+</section>
+
+<!-- Snapshot Results -->
+<section class="card" id="snapshot-card" style="display:none">
+  <h2 class="card-title">Snapshot — Single Query</h2>
+  <table class="result-table" id="snapshot-table">
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>PID</th>
+        <th>Name</th>
+        <th>Received</th>
+        <th>Expected</th>
+        <th>Diff</th>
+        <th>Unit</th>
+      </tr>
+    </thead>
+    <tbody id="snapshot-tbody"></tbody>
+  </table>
+</section>
+
+<!-- Reliability Report -->
+<section class="card" id="report-card" style="display:none">
+  <h2 class="card-title">Reliability Report</h2>
+  <div id="verdict-banner" class="verdict-banner"></div>
+  <table class="result-table" id="report-table">
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>PID</th>
+        <th>Name</th>
+        <th>Attempts</th>
+        <th>Correct</th>
+        <th>No Resp</th>
+        <th>Wrong</th>
+        <th>Rate</th>
+        <th>Bar</th>
+      </tr>
+    </thead>
+    <tbody id="report-tbody"></tbody>
+  </table>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/verify.js') }}"></script>
+{% endblock %}

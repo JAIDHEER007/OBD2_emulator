@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}OBD2 Emulator{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar">
+    <span class="nav-brand">OBD2 Emulator</span>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+        <span class="nav-icon">&#9654;</span> Dashboard
+      </a>
+      <a href="{{ url_for('pid_editor') }}" class="nav-link {% if request.endpoint == 'pid_editor' %}active{% endif %}">
+        <span class="nav-icon">&#9998;</span> PID Editor
+      </a>
+      <a href="{{ url_for('log_files') }}" class="nav-link {% if request.endpoint == 'log_files' %}active{% endif %}">
+        <span class="nav-icon">&#128196;</span> Log Files
+      </a>
+      <a href="{{ url_for('verify') }}" class="nav-link {% if request.endpoint == 'verify' %}active{% endif %}">
+        <span class="nav-icon">&#10003;</span> Verify
+      </a>
+    </div>
+    <div class="nav-status" id="global-status">
+      <span class="status-dot" id="conn-dot"></span>
+      <span id="conn-label">Disconnected</span>
+    </div>
+  </nav>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    // Poll Arduino connection status every 5 s
+    function updateGlobalStatus() {
+      fetch('/api/arduino/status')
+        .then(r => r.json())
+        .then(d => {
+          const dot = document.getElementById('conn-dot');
+          const lbl = document.getElementById('conn-label');
+          if (d.connected) {
+            dot.className = 'status-dot connected';
+            lbl.textContent = d.port || 'Connected';
+          } else {
+            dot.className = 'status-dot';
+            lbl.textContent = 'Disconnected';
+          }
+        })
+        .catch(() => {});
+    }
+    updateGlobalStatus();
+    setInterval(updateGlobalStatus, 5000);
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

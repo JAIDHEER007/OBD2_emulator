@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — OBD2 Emulator{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Dashboard</h1>
+  <p class="page-subtitle">Live CAN bus log from the Arduino Nano</p>
+</div>
+
+<!-- Port Selector -->
+<section class="card">
+  <h2 class="card-title">Arduino Serial Port</h2>
+  <div class="port-row">
+    <select id="port-select" class="select">
+      <option value="">— select port —</option>
+    </select>
+    <button id="btn-connect" class="btn btn-primary">Connect</button>
+    <button id="btn-disconnect" class="btn btn-danger">Disconnect</button>
+    <button id="btn-push" class="btn btn-secondary" title="Re-send current PID values to Arduino">Push Values</button>
+    <span id="connect-status" class="status-text"></span>
+  </div>
+  <div id="port-info" class="port-info-box"></div>
+</section>
+
+<!-- Log Controls -->
+<section class="card">
+  <div class="log-toolbar">
+    <h2 class="card-title" style="margin:0">Live Log</h2>
+    <div class="toolbar-actions">
+      <button id="btn-pause" class="btn btn-secondary btn-sm">&#9646;&#9646; Pause</button>
+      <button id="btn-clear" class="btn btn-secondary btn-sm">&#128465; Clear</button>
+      <button id="btn-save" class="btn btn-primary btn-sm">&#128190; Save Session</button>
+      <span id="log-count" class="count-badge">0 entries</span>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="log-stats">
+    <div class="stat-pill rx">RX <span id="stat-rx">0</span></div>
+    <div class="stat-pill tx">TX <span id="stat-tx">0</span></div>
+    <div class="stat-pill err">ERR <span id="stat-err">0</span></div>
+  </div>
+
+  <div class="table-wrapper" id="log-table-wrapper">
+    <table class="log-table" id="log-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Dir</th>
+          <th>CAN ID</th>
+          <th>Mode</th>
+          <th>PID</th>
+          <th>Data</th>
+          <th>Raw</th>
+        </tr>
+      </thead>
+      <tbody id="log-tbody"></tbody>
+    </table>
+  </div>
+  <p id="no-log-msg" class="empty-msg">No log entries yet. Connect to an Arduino port to start.</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
