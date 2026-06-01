@@ -8,4 +8,4 @@ dependencies:
   - pyserial>=3.5
   - pip
   - pip:
-      - python-obd>=0.7.1
+      - obd>=0.7.1

@@ -10,7 +10,7 @@ import time
 import queue
 from datetime import datetime
 
-import obd
+import obd  # pip: obd>=0.7.1
 from obd import OBDStatus
 
 from pid_schema import PID_SCHEMA, OBD_COMMAND_NAMES
